@@ -1,41 +1,47 @@
 <div class="container">
 
-  <span ng-if="sctrl.validShortName()">Your information has been saved!</span>
-<form name="sctrl.form" novalidate>
 
-  <div class="form-group" ng-class="{'has-error' : sctrl.form.firstName.$touched && sctrl.form.firstName.$invalid}">
+<form name="signupForm" novalidate>
+
+  <div class="form-group" ng-class="{'has-error' : signupForm.firstName.$touched && signupForm.firstName.$invalid}">
     <label class="control-label">First Name</label>
-    <input type="text" ng-model="sctrl.user.firstName" name="firstName" class="form-control" placeholder="First Name" required>
-    <div class="control-label" ng-if="sctrl.form.firstName.$touched && sctrl.form.firstName.$invalid">First name is a required field</div>
+    <input type="text" ng-model="sctrl.user.firstName" name="firstName" class="form-control" placeholder="First Name" required minlength="4" maxlength="20">
+    <div class="control-label" ng-if="(signupForm.firstname.$error.minlength || signupForm.firstName.$touched) && signupForm.firstName.$invalid">Firstname must be at least 4 characters long</div>
+
   </div>
 
-  <div class="form-group" ng-class="{'has-error' : sctrl.form.lastName.$touched && sctrl.form.lastName.$invalid}">
+  <div class="form-group" ng-class="{'has-error' : signupForm.lastName.$touched && signupForm.lastName.$invalid}">
     <label class="control-label">Last Name</label>
-    <input type="text" ng-model="sctrl.user.lastName" name="lastName" class="form-control" placeholder="Last Name" required>
-    <div class="control-label" ng-if="sctrl.form.lastName.$touched && sctrl.form.lastName.$invalid">Last name is a required field</div>
+    <input type="text" ng-model="sctrl.user.lastName" name="lastName" class="form-control" placeholder="Last Name" required minlength="4" maxlength="20">
+    <div class="control-label" ng-if="(signupForm.lastName.$error.minlength || signupForm.lastName.$touched) && signupForm.lastName.$invalid">Last name must be at least 4 characters long</div>
   </div>
 
-  <div class="form-group" ng-class="{'has-error' : sctrl.form.phoneNumber.$touched && sctrl.form.firstName.$invalid}">
+  <div class="form-group" ng-class="{'has-error' : signupForm.phoneNumber.$touched && signupForm.phoneNumber.$invalid}">
     <label class="control-label">Phone Number</label>
-    <input type="text" ng-model="sctrl.user.phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone Number" required>
-    <div class="control-label" ng-if="sctrl.form.phoneNumber.$touched && sctrl.form.phoneNumber.$invalid">Phone number is a required field</div>
+    <input type="text" ng-model="sctrl.user.phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone ###-###-####" required pattern="(\d{3}-\d{3}-\d{4})">
+    <div class="control-label" ng-if="signupForm.phoneNumber.$touched && signupForm.phoneNumber.$invalid">Phone number is a required field</div>
   </div>
 
-  <div class="form-group" ng-class="{'has-error' : sctrl.form.email.$touched && sctrl.form.email.$invalid}">
+  <div class="form-group" ng-class="{'has-error' : signupForm.email.$touched && signupForm.email.$invalid}">
     <label class="control-label">Email</label>
-    <input type="text" ng-model="sctrl.user.email" name="email" class="form-control" placeholder="Email" required>
-    <div class="control-label" ng-if="sctrl.form.email.$touched && sctrl.form.email.$invalid">Email is a required field</div>
+    <input type="email" ng-model="sctrl.user.email" name="email" class="form-control" placeholder="Email" required>
+    <div class="control-label" ng-if="signupForm.email.$touched && signupForm.email.$invalid">Enter a valid email address</div>
   </div>
 
-  <div class="form-group" ng-class="{'has-error' : sctrl.form.shortName.$touched && sctrl.form.shortName.$invalid}">
+  <div class="form-group" ng-class="{'has-error' : signupForm.shortName.$touched && signupForm.shortName.$invalid}">
     <label class="control-label">Menu Number</label>
     <input type="text" ng-model="sctrl.user.shortName" name="shortName" class="form-control" placeholder="Menu Number" required>
-    <div class="control-label" ng-if="sctrl.form.shortName.$touched && sctrl.form.shortName.$invalid">Menu Number is a required field</div>
-    <div class="control-label" ng-if="!sctrl.validShortName()">Enter a valid menu number<div>
+    <div>
+      <span ng-if="signupForm.shortName.$touched && signupForm.shortName.$invalid">Menu Number is a required field</span>
+      <span ng-if="!sctrl.validShortName && signupForm.shortName.$valid">Enter a valid menu number</span>
+
+   </div>
+
   </div>
 
+<div class="control-label" ng-if="sctrl.validForm">Your information has been saved!</div>
   <div class="pull-left">
-    <button class="btn btn-success" ng-click="sctrl.save(sctrl.user)" >Submit</button>
+    <button class="btn btn-success" ng-click="sctrl.save()" ng-disabled="signupForm.$invalid">Submit</button>
     <button class="btn btn-default" ng-click="sctrl.cancel()">Cancel</button>
   </div>
 </form>

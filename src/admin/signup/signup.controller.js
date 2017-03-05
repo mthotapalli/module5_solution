@@ -8,32 +8,33 @@ angular.module('admin')
 SignupController.$inject = ['$scope','SignupService', 'ApiPath','$http'];
 function SignupController($scope, SignupService, ApiPath, $http) {
   var $ctrl = this;
- $ctrl.user ={};
- $ctrl.validForm = false;
-  $ctrl.save = function () {
-    return SignupService.saveUser($ctrl.user);
-  };
+ 
+ $ctrl.validForm;
+ $ctrl.validShortName;;
+  // $ctrl.save = function () {
+  //   return SignupService.saveUser($ctrl.user);
+  // };
 
   $ctrl.save = function () {
+    var menuDetail;
 
-    $ctrl.validateShortName($ctrl.user.shortName)
-    return SignupService.saveUser($ctrl.user);
-  };
+    //return SignupService.saveUser($ctrl.user);
 
-  $ctrl.validateShortName = function(shortName){
-
-    return $http.get(ApiPath+"/menu_items/"+shortName+".json").then(function(response){
+    SignupService.getMenuDetails($ctrl.user.shortName)
+    .then(function(dish){
+      menuDetail = dish;
+      $ctrl.user.dishName = menuDetail.name;
+      $ctrl.user.dishDesc = menuDetail.description;
+      $ctrl.validShortName = true;
       $ctrl.validForm = true;
-      return true;
-    }).catch(function(){
-      $ctrl.validForm = false;
-      return false;
+      SignupService.saveUser($ctrl.user);
+    }).catch(function(err){
+      $ctrl.validShortName = false;
+        $ctrl.validForm = false;
+
     });
   };
 
-  $ctrl.validShortName = function(){
-      return  $ctrl.validForm;
-  }
 
 }
 

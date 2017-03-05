@@ -1,6 +1,29 @@
 
-<div class"container">
+<div class="container">
 
-
-<user></user>
+  <span ng-show="infoCtrl.showSign">Not signed up yet <a ui-sref="admin.signup">Signup now!</a></span>
+  <div ng-show="!infoCtrl.showSign" >
+      <h2>User Information </h2>
+  <div class="form-group">
+    <label class="control-label">First Name: </label>
+    <span>{{infoCtrl.user.firstName}}</span>
+  </div>
+  <div class="form-group">
+    <label class="control-label">Last Name: </label>
+    <span>{{infoCtrl.user.lastName}}</span>
+  </div>
+  <div class="form-group">
+    <label class="control-label">Phone Number: </label>
+    <span>{{infoCtrl.user.phoneNumber}}</span>
+  </div>
+  <div class="form-group">
+    <label class="control-label">Email: </label>
+    <span>{{infoCtrl.user.email}}</span>
+  </div>
+  <div class="form-group">
+    <label class="control-label">Your Favorite menu item:</label>
+    <div>{{infoCtrl.user.dishName}}({{infoCtrl.user.short_name}}): {{infoCtrl.user.dishDesc}}</div>
+    <div class="control-label"><img class="img-responsive" width="250" height="150" ng-src="{{infoCtrl.imageUrl}}" alt="{{infoCtrl.user.short_name}}"></div>
+  </div>
+</div>
 </div>

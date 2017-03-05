@@ -27,7 +27,7 @@ function config($stateProvider, $httpProvider) {
     .state('admin.info', {
       url: '/info',
       templateUrl: 'src/admin/signup/info.html',
-      controller: 'SignupController as infoCtrl',
+      controller: 'InfoController as infoCtrl',
       resolve : {
         info:['SignupService',function(SignupService){
           return SignupService.getUser();

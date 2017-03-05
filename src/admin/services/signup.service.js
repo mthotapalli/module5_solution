@@ -9,8 +9,8 @@ angular.module('admin')
  * This is intended to be injected any time we need some user metadata
  * or to find out if the user is authenticated.
  **/
- SignupService.$inject = ['$q']
-function SignupService($q) {
+ SignupService.$inject = ['$q', '$http','ApiPath']
+function SignupService($q, $http, ApiPath) {
   var service = this;
   service.user = {};
 
@@ -18,6 +18,11 @@ function SignupService($q) {
   /**
    * Load the current user with username and token
    */
+  service.getMenuDetails = function(shortName){
+      return $http.get(ApiPath+"/menu_items/"+shortName+".json").then(function(response){
+        return response.data;
+      });
+  }
   service.saveUser = function(user) {
       service.user = user;
   };
